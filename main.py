@@ -122,6 +122,10 @@ class Utilities(commands.Cog):  # Cog for basic, generic commands, like help, pi
                        f"2. Improve help menu, error messages, and other UX \n"
                        f"3. Plan out implementation for personal trading accounts, stocks, and investments**")
 
+    @commands.command()
+    async def commit(self, ctx):
+        dbOperations.conn_commit()  # when the bot is acting whack, run this before closing to commit db changes
+
 
 class FactionCommands(commands.Cog):    # Cog for faction related commands
 
@@ -230,6 +234,8 @@ class ShipCommands(commands.Cog):
         result = dbOperations.delete_ship(ship_name, ctx.author.id)
         if result == "Not found":
             await ctx.send(f"**{ship_name} not found**")
+        elif result == "Wrong ID":
+            await ctx.send(f"**{ship_name} does not belong to you!**")
         else:
             await ctx.send(f"**You deleted {ship_name}!**")
 

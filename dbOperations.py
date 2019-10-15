@@ -161,6 +161,8 @@ def delete_ship(ship, user_id):
         id = row[4]
         if ship == row[0] and user_id == int(id):
             entry = row
+        elif ship == row[0] and user_id != int(id):
+            entry = "Wrong ID"
     if entry == "Not found":
         return "Not found"
     else:
@@ -193,3 +195,7 @@ def update_score(faction, amount):
 def reset_score():
     c.execute('SELECT * FROM factionAccount')
     c.execute('UPDATE factionAccount SET score = (?)', (0, ))
+
+
+def conn_commit():
+    conn.commit()
